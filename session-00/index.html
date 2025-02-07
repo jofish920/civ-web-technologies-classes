@@ -1,0 +1,191 @@
+<html lang="en">
+    <head>
+        <title>
+            C4 WebTech S1 Challenge Responses (J. Meyer 20089460)
+        </title>
+        <style>
+            h1 {
+                text-align: center;
+            }
+            header, footer {
+                background-color: lightgray;
+                border: 1px solid black;
+            }
+            footer {
+                margin-top: 20px;
+            }
+            main > section {
+                border: 1px solid black;
+                margin-top: 10px;
+                padding: 0 1rem 0.5rem 1rem;
+            }
+            .ans {
+                color: blue;
+            }
+            span.ans::before {
+                content: " - ";
+                color: blue;
+            }
+            .attrs, .attrs::before, .attrs::after {
+                color: cornflowerblue;
+            }
+            .attrs {
+                display: block;
+            }
+            .todo, .todo::before, .todo::after {
+                color: red;
+            }
+            .attrs::before, .todo::before {
+                content: " [";
+            }
+            .attrs::after, .todo::after {
+                content: "]";
+             }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>
+                ICT40120 Certificate IV in Programming <br />
+                Challenge Responses - Session 1 <br />
+                <br />
+                Josef Meyer - 20089460
+            </h1>
+        </header>
+        <main>
+            <section>
+                <h2>Challenge 1</h2>
+                What do the following 5 terms stand for?
+                <ul>
+                <li>PAN <span class="ans">Personal Area Network</span></li>
+                <li>LAN <span class="ans">Local Area Network</span></li>
+                <li>WAN <span class="ans">Wide Area Network</span></li>
+                <li>Intranet
+                    <span class="ans">
+                        private network for use by those that are
+                        part of an organization
+                    </span>
+                </li>
+                <li>Extranet
+                    <span class="ans">
+                        private network for use by external entities
+                        allowed access by an organization
+                    </span>
+                </li>
+                </ul>
+            </section>
+            <section>
+                <h2>Challenge 2</h2>
+                <ol>
+                <li>Can you name the nine HTTP request methods?
+                    <ol class="ans">
+                        <li>GET - fetches a resource from the server
+                            <span class="attrs">- body, + safe, + idempotent</span>
+                        </li>
+                        <li>POST - creates a new resource associated with the URI,
+                            or performs some other operation using the data provided
+                            by the client
+                            <span class="attrs">+ body, - safe, - idempotent</span>
+                        </li>
+                        <li>PUT - updates (or creates) the resource associated with the
+                            URI
+                            <span class="attrs">+ body, - safe, + idempotent</span>
+                        </li>
+                        <li>DELETE - deletes the resource associated with the URI
+                            <span class="attrs">+ body, - safe, + idempotent</span>
+                        </li>
+                        <li>PATCH - updates the resource using the data provided in
+                            the body of rthe request
+                            <span class="attrs">+ body, - safe, - idempotent</span>
+                        </li>
+                        <li>OPTIONS - returns the "communications options" (gen. methods)
+                            available for the resource (not always supported)
+                            <span class="attrs">- body, + safe, + idempotent</span>
+                        </li>
+                        <li>HEAD - returns the headers that would accompany
+                            the resource without the content (gets metadata)
+                            <span class="attrs">- body, + safe, + idempotent</span>
+                        </li>
+                        <li>TRACE - debugging method that provides information on the servers
+                            that process the request and response
+                            <span class="attrs">- body, + safe, + idempotent</span>
+                        </li>
+                        <li>CONNECT - establishes a connection to the resource / server
+                            <span class="attrs">not REST</span>
+                        </li>
+                    </ol>
+
+                </li>
+                <li>Pick three and describe what these request types do?
+                    <span class="ans">See GET, POST, PUT above</span>
+                </li>
+                <li>Which request only retrieves data from a server?
+                <span class="ans">GET</span>
+                </li>
+                </ol>
+            </section>
+            <section>
+                <h2>Challenge 3</h2>
+                In your groups identify how a cloud platform uses
+                <div class="ans">(Not done as part of group.)</div>
+                <ol>
+                <li>IP Addresses
+                  <span class="ans">used by programs to identify hosts and thus
+                      to communicate with servers; IP addresses are frequently
+                      obtained by translating from host names using calls
+                      to library functions, which may either translate explicitly
+                      from a name to an address or make use of such a call in creating
+                      a channel through which data may be exchanged with a server.
+                  </span>
+                </li>
+                <li>URI & URL
+                  <span class="ans">
+                      A URI (uniform resource identifier) provides a way of specifying a
+                      resource on the internet.  URIs are divided into URLs (uniform
+                      resource locations), which specify how to access a resource, and
+                      URNs (uniform resource names), which provide a unique identifier
+                      that can continue to be used to refer to the resource regardless
+                      of where (or if) it can be accessed at a particular point in time.
+                  </span>
+                </li>
+                <li>DNS
+                    <span class="ans">
+                        a domain name server translates between the name of a host
+                        and the associated IP address(es); host names have advantages
+                        when it comes to storing locations and interacting with users,
+                        while the internet protocol (the IP in TCP/IP) makes use of
+                        numeric IP addresses.
+                    </span>
+                </li>
+                </ol>
+                Are they different to traditional servers?
+                <div class="ans">
+                    The term "cloud platform" basically refers to a network
+                    of servers that provide access to computing resources
+                    to clients.  This includes storage, processing, and access
+                    to software resources.  A traditional server environment
+                    involves a host machine that is constantly available and
+                    is used to run server processes that respond to incoming
+                    requests from clients (as well as performing various other
+                    tasks).  <span class="todo">finish this</span>
+                </div>
+            </section>
+            <section>
+                <h2>Challenge 4: Testing HTTP Status Codes</h2>
+                Using our API & the documentation go to:
+                https://reqres.in/api/users/
+                <ol>
+                <li>Change the parameter when searching users with the API</li>
+                <li>Add an incorrect parameter</li>
+                <li>Make a call to a route that doesn’t exist</li>
+                <li>Add an incorrectly formed JSON to POST or PUT requests</li>
+                <li>Remove some/all headers from a request</li>
+                </ol>
+            </section>
+        </main>
+    <footer>
+        <span class="label">Date:</span>
+        <span class="date">2025-02-07</span>
+    </footer>
+    </body>
+    </html>
