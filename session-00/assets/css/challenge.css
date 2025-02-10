@@ -1,0 +1,60 @@
+h1 {
+    text-align: center;
+}
+header, footer {
+    background-color: lightgray;
+    border: 1px solid black;
+}
+footer {
+    margin-top: 20px;
+}
+main > section {
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 0 1rem 0.5rem 1rem;
+}
+span.ans::before {
+    content: " - ";
+    color: blue;
+}
+.ans {
+    color: blue;
+}
+.attrs, .attrs::before, .attrs::after {
+    color: cornflowerblue;
+}
+.attrs {
+    display: block;
+}
+.todo, .todo::before, .todo::after {
+    color: red;
+}
+.attrs::before, .todo::before {
+    content: " [";
+}
+.attrs::after, .todo::after {
+    content: "]";
+}
+code {
+    background-color: antiquewhite;
+}
+.code_block {
+    display: block;
+    white-space: preserve;
+    border: 1px dotted black;
+    padding: 0 0.25em 0 0.25em;
+}
+
+.request {
+    background-color: antiquewhite;
+    border: 1px dotted black;
+    margin: 0 0 0.25em 0;
+}
+
+.label {
+    font-weight: bold;
+}
+
+ol ol {
+    list-style-type: lower-alpha;
+}

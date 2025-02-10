@@ -3,45 +3,7 @@
         <title>
             C4 WebTech S1 Challenge Responses (J. Meyer 20089460)
         </title>
-        <style>
-            h1 {
-                text-align: center;
-            }
-            header, footer {
-                background-color: lightgray;
-                border: 1px solid black;
-            }
-            footer {
-                margin-top: 20px;
-            }
-            main > section {
-                border: 1px solid black;
-                margin-top: 10px;
-                padding: 0 1rem 0.5rem 1rem;
-            }
-            .ans {
-                color: blue;
-            }
-            span.ans::before {
-                content: " - ";
-                color: blue;
-            }
-            .attrs, .attrs::before, .attrs::after {
-                color: cornflowerblue;
-            }
-            .attrs {
-                display: block;
-            }
-            .todo, .todo::before, .todo::after {
-                color: red;
-            }
-            .attrs::before, .todo::before {
-                content: " [";
-            }
-            .attrs::after, .todo::after {
-                content: "]";
-             }
-        </style>
+        <link rel="stylesheet" href="assets/css/challenge.css" />
     </head>
     <body>
         <header>
@@ -95,7 +57,7 @@
                             <span class="attrs">+ body, - safe, + idempotent</span>
                         </li>
                         <li>PATCH - updates the resource using the data provided in
-                            the body of rthe request
+                            the body of the request
                             <span class="attrs">+ body, - safe, - idempotent</span>
                         </li>
                         <li>OPTIONS - returns the "communications options" (gen. methods)
@@ -162,12 +124,22 @@
                 <div class="ans">
                     The term "cloud platform" basically refers to a network
                     of servers that provide access to computing resources
-                    to clients.  This includes storage, processing, and access
-                    to software resources.  A traditional server environment
-                    involves a host machine that is constantly available and
-                    is used to run server processes that respond to incoming
-                    requests from clients (as well as performing various other
-                    tasks).  <span class="todo">finish this</span>
+                    to clients.  These resources include storage, processing,
+                    and software resources via public APIs (often based on HTTP).
+                    Unlike more traditional server environments, these resources
+                    are not typically associated with a single host machine that
+                    processes all client requests.  Cloud computing often makes
+                    use of microservices, which implement parts of an application
+                    as small(ish), self-contained, network-accessible components.
+                    These are not typically implemented as long-lived server tasks.
+                    Instead, they often run on short-lived containers that ideally
+                    provide the minimum required to run a server that provides the
+                    service, or are "serverless", in the sense that the microservice
+                    is implemented as small pieces of code that run in response
+                    to events such as requests for services made by clients through
+                    the cloud provider.
+
+                    <span class="todo">needs reviewing</span>
                 </div>
             </section>
             <section>
@@ -175,12 +147,123 @@
                 Using our API & the documentation go to:
                 https://reqres.in/api/users/
                 <ol>
-                <li>Change the parameter when searching users with the API</li>
-                <li>Add an incorrect parameter</li>
-                <li>Make a call to a route that doesn’t exist</li>
-                <li>Add an incorrectly formed JSON to POST or PUT requests</li>
-                <li>Remove some/all headers from a request</li>
+                <li>
+                    Change the parameter when searching users with the API.
+                    <div class="ans">
+                        See <a href="#c4-valid-params">valid parameters</a> below
+                        for results of making requests with different valid parameters.
+                        Response code is 200 ("200 OK").
+                    </div>
+                </li>
+                <li>Add an incorrect parameter.
+                <div class="ans">
+                    All of the requests involving incorrect parameters resulted in
+                    a response code of 200 ("200 OK") and a response body
+                    containing JSON matching some variation of the request.
+                    <ol>
+                        <li>
+                            Adding an incorrect parameter to a valid query does not
+                            change the result.  The following produce the same
+                            result:
+                            <ul>
+                                <li>
+                                    <code>https://reqres.in/api/users?<!--
+                                    -->per_page=1&page=5&ziggy=woo</code>
+                                </li>
+                                <li>
+                                    <code>https://reqres.in/api/users?<!--
+                                    -->per_page=1&page=5</code>.
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Setting a numeric parameter to a non-numeric value or 0 also
+                            results in the parameter being treated as if the
+                            default value had been specified.
+                        </li>
+                        <li>
+                            Negative values for <code>page</code> or <code>per_page</code>
+                            specify an offset from the end of the result set; e.g.
+                            <code>per_page=0</code> or <code>per_page=cat</code> are treated
+                            as <code>per_page=6</code>.
+                        </li>
+                    </ol>
+                </div>
+                </li>
+                <li>Make a call to a route that doesn't exist
+                    <ul class="ans">
+                        <li>Non-existent user or non-numeric userid (e.g.
+                            <a href="https://reqres.in/api/users/99"
+                            >https://reqres.in/api/users/99</a> or
+                            <a href="https://reqres.in/api/users/jim"
+                            >https://reqres.in/api/users/jim</a>):
+                            code "404", message "Not Found" JSON empty
+                            object as body "{}".
+                        </li>
+                        <li>Additional components added to path (e.g.
+                            <a href="https://reqres.in/api/1/hello"
+                            >https://reqres.in/api/1/hello</a>):
+                            code "404", message "Not Found"
+                        </li>
+                    </ul>
+                </li>
+                <li>Add an incorrectly formed JSON to POST or PUT requests
+                    <div class="ans">
+                        In either case, the status code and message
+                        are "404 Bad Request" with an HTML body containing
+                        a page with an error message, even if the "Accept"
+                        header is set to "application/json".
+                    </div>
+                </li>
+                <li>Remove some/all headers from a request
+                    <ul class="ans">
+                        <li>
+                            Using postman, removing all but the mandatory
+                            headings that are added by the site, a "GET"
+                            request returns the same response.
+                        </li>
+                        <li>
+                            This would be worth trying with a site that
+                            supports responses in either HTML or JSON format.
+                        </li>
+                    </ul>
+                </li>
                 </ol>
+                <section class="ans">
+                    <h3 id="c4-valid-params">Valid parameters</h3>
+                    <ol>
+                        <li>
+                            Parameters specified using query-string.
+                            <div class="request">
+                            GET <code>https://reqres.in/api/users?per_page=1&page=5</code>.
+                            </div>
+
+                            <code lang="json" class="code_block">
+<!--                   -->200 OK
+
+<!--                   -->{
+<!--                   -->    "page": 5,
+<!--                   -->    "per_page": 1,
+<!--                   -->    "total": 12,
+<!--                   -->    "total_pages": 6,
+<!--                   -->    "data": [
+<!--                   -->        {
+<!--                   -->            "id": 5,
+<!--                   -->            "email": "charles.morris@reqres.in",
+<!--                   -->            "first_name": "Charles",
+<!--                   -->            "last_name": "Morris",
+<!--                   -->            "avatar": "https://reqres.in/img/faces/5-image.jpg"
+<!--                   -->        }
+<!--                   -->    ],
+<!--                   -->    "support": {
+<!--                   -->        "url": "https://contentcaddy.io?utm_source=reqres&utm_medium=json&utm_campaign=referral",
+<!--                   -->        "text": "Tired of writing endless social media content? Let Content Caddy generate it for you."
+<!--                   -->    }
+<!--                   -->}
+                          </code>
+                        </li>
+                    </ol>
+                </section>
             </section>
         </main>
     <footer>
